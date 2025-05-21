@@ -24,3 +24,25 @@ export const createUser = async ({ email, password }: CreateUserProps) => {
     },
   });
 };
+
+export const verifyUser = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  email = email.toLowerCase();
+
+  const user = await prisma.admin.findFirst({
+    where: { email },
+  });
+
+  if (!user) return false;
+
+  const isValid = bcrypt.compareSync(password, user.password);
+
+  if (!isValid) return false;
+
+  return user;
+};
