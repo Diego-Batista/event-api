@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import { adminRoutes } from "./routes/admin";
 import { authRoutes } from "./routes/auth";
+import { mainRoutes } from "./routes/main";
 
 const server = express();
 server.use(cors());
@@ -16,7 +17,8 @@ server.get("/", (req, res) => {
 
 server.use("/api/auth", authRoutes);
 server.use("/api/admin", adminRoutes);
+server.use("/api/main", mainRoutes);
 
 server.listen(4444, () => {
-  console.log("Server is running on http://localhost:3000");
+  console.log("Server is running on Event api");
 });
