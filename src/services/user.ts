@@ -46,3 +46,17 @@ export const verifyUser = async ({
 
   return user;
 };
+
+export const getUserById = async (id: number) => {
+  const user = await prisma.admin.findUnique({
+    where: { id: id.toString() },
+    select: {
+      id: true,
+      email: true,
+    },
+  });
+
+  if (!user) return false;
+
+  return user;
+};

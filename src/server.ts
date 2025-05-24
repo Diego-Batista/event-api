@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
+import { adminRoutes } from "./routes/admin";
 import { authRoutes } from "./routes/auth";
 
 const server = express();
@@ -14,6 +15,7 @@ server.get("/", (req, res) => {
 });
 
 server.use("/api/auth", authRoutes);
+server.use("/api/admin", adminRoutes);
 
 server.listen(4444, () => {
   console.log("Server is running on http://localhost:3000");
