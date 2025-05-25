@@ -30,3 +30,28 @@ export const createParticipant = async ({
     },
   });
 };
+
+export const getParticipantById = async (id: number) => {
+  const participant = await prisma.participant.findUnique({
+    where: { id: id.toString() },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      phone: true,
+      event: {
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          date: true,
+        },
+      },
+    },
+  });
+
+  if (!participant) return false;
+
+  return participant;
+};
+

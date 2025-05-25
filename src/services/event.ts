@@ -32,27 +32,23 @@ import { prisma } from "../libs/prisma";
 //     return newSlug
 // }
 
-// export const getEvent = async (slug: string) => {
-//     return await prisma.event.findUnique({
-//         where: {
-//             id,
-//         },
-//         include: {
-//             dispatches: {
-//                 include: {
-//                     user: {
-//                         select: {
-//                             id: true,
-//                             name: true,
-//                             email: true,
-//                             avatar: true,
-//                         }
-//                     }
-//                 }
-//             }
-//         },
-//     })
-// }
+export const getEvent = async (id: string) => {
+  return await prisma.event.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      participants: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+        },
+      },
+    },
+  });
+};
 
 type CreateEventProps = {
   title: string;

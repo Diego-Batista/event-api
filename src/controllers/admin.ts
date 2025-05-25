@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { z } from "zod";
 import { prisma } from "../libs/prisma";
 import { ExtendedRequest } from "../types/extended-request";
@@ -46,4 +46,31 @@ export const addEvent = async (req: ExtendedRequest, res: Response) => {
       date: newEvent.date,
     },
   });
+};
+
+export const getEvent = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const event = await prisma.event.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      participants: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+        },
+      },
+    },
+  });
+
+  if (!event) {
+    res.status(404).json({ error: "Event not found" });
+    return;
+  }
+
+  res.status(200).json(event);
 };
