@@ -3,4 +3,4 @@ import * as mainController from "../controllers/main";
 
 export const mainRoutes = Router();
 
-mainRoutes.post("/participant", mainController.sigUpParticipant);
+mainRoutes.post("/participant/:eventId", mainController.sigUpParticipant);

@@ -6,6 +6,7 @@ CREATE TABLE "Participant" (
     "phone" TEXT NOT NULL,
     "paid" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "eventId" TEXT NOT NULL,
 
     CONSTRAINT "Participant_pkey" PRIMARY KEY ("id")
 );
@@ -33,7 +34,7 @@ CREATE TABLE "Event" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL,
+    "date" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -65,6 +66,9 @@ CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "EmailDispatch_eventId_participantId_key" ON "EmailDispatch"("eventId", "participantId");
+
+-- AddForeignKey
+ALTER TABLE "Participant" ADD CONSTRAINT "Participant_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "EmailDispatch" ADD CONSTRAINT "EmailDispatch_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
